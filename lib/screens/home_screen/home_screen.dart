@@ -6,7 +6,7 @@ import '../../data/surah_data.dart';
 import '../../Suars/surah_details_screen.dart';
 import '../Sebha/sebha_screen.dart';
 import '../Radio/radio_screen.dart';
-import '../Hadith/hadith_screen.dart'; // شاشة الحديث
+import '../Hadith/hadith_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,10 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
 
   final screens = [
-    const HomeContent(), // محتوى Home الأصلي
+    const HomeContent(),
     const SebhaScreen(),
     const RadioScreen(),
-    const HadithScreen(), // شاشة الحديث
+    const HadithScreen(),
   ];
 
   void onBottomIconPressed(String screen) {
@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (screen == 'moon' || screen == 'home') {
         currentIndex = 0;
       } else if (screen == 'book') {
-        currentIndex = 3; // عرض شاشة الحديث
+        currentIndex = 3;
       } else if (screen == 'sebha') {
         currentIndex = 1;
       } else if (screen == 'radio') {

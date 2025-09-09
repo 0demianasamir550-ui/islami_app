@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/surah_data.dart'; // يستورد القوائم اللي عملناها
+import '../data/surah_data.dart';
 
 class SurahList extends StatelessWidget {
   const SurahList({super.key});
@@ -20,7 +20,7 @@ class SurahList extends StatelessWidget {
             radius: 20,
             backgroundColor: const Color(0xFFE2BE7F),
             child: Text(
-              (index + 1).toString(), // رقم السورة
+              (index + 1).toString(),
               style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
           ),
@@ -37,7 +37,6 @@ class SurahList extends StatelessWidget {
             ],
           ),
           onTap: () {
-            // افتراضيًا نعرض SnackBar لكن تقدر تغيريها للتنقل لشاشة السورة
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Open ${arabic} — ${english}')),
             );

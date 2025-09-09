@@ -37,7 +37,6 @@ class _SebhaScreenState extends State<SebhaScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // الخلفية
           Positioned.fill(
             child: Image.asset(
               'assets/images/two.jpg',
@@ -46,7 +45,6 @@ class _SebhaScreenState extends State<SebhaScreen> {
           ),
           Container(color: Colors.black.withOpacity(0.6)),
 
-          // صورة Islami + المسجد
           Positioned(
             top: 30,
             left: 0,
@@ -72,7 +70,6 @@ class _SebhaScreenState extends State<SebhaScreen> {
             ),
           ),
 
-          // الجملة تحت Islami
           const Positioned(
             top: 217,
             left: 58,
@@ -93,7 +90,6 @@ class _SebhaScreenState extends State<SebhaScreen> {
             ),
           ),
 
-          // السبحه الدائرة الكبيرة
           Positioned(
             top: 300,
             left: 26,

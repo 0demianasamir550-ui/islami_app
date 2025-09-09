@@ -7,11 +7,11 @@ class BottomIcons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80, // ارتفاع البوتوم
-      color: const Color(0xFFE2BE7F), // لون الخلفية
+      height: 80,
+      color: const Color(0xFFE2BE7F),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround, // توزيع متساوي للأيقونات
-        crossAxisAlignment: CrossAxisAlignment.center,   // توسيط رأسي
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           GestureDetector(
             onTap: () => onIconPressed('moon'),

@@ -32,7 +32,6 @@ class _RadioScreenState extends State<RadioScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // الخلفية
           Positioned.fill(
             child: Image.asset(
               'assets/images/three.jpg',
@@ -41,7 +40,6 @@ class _RadioScreenState extends State<RadioScreen> {
           ),
           Container(color: Colors.black.withOpacity(0.3)),
 
-          // Islami و المسجد
           Positioned(
             top: 30,
             left: 0,
@@ -67,7 +65,6 @@ class _RadioScreenState extends State<RadioScreen> {
             ),
           ),
 
-          // Rectangle الازرار
           Positioned(
             top: 150,
             left: 20,
@@ -139,12 +136,11 @@ class _RadioScreenState extends State<RadioScreen> {
             ),
           ),
 
-          // المستطيلات الأربعة
           Positioned(
             top: 220,
             left: 20,
             right: 20,
-            bottom: 0, // بدل 90 عشان نشيل مساحة البوتوم
+            bottom: 0,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(4, (index) {
@@ -232,7 +228,6 @@ class _RadioScreenState extends State<RadioScreen> {
   }
 }
 
-// Main لتشغيل الشاشة لوحدها
 void main() {
   runApp(const MaterialApp(home: RadioScreen()));
 }

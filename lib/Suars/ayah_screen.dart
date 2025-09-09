@@ -95,7 +95,6 @@ class AyahScreen extends StatelessWidget {
               ),
             ),
           ),
-          // الصور الموجودة في التصميم
           Positioned(
             top: 89,
             left: 317,

@@ -17,7 +17,7 @@ class HadithScreen extends StatefulWidget {
 
 class _HadithScreenState extends State<HadithScreen> {
   late PageController _pageController;
-  final Map<int, String> _hadithCache = {}; // لتخزين المحتوى المقروء
+  final Map<int, String> _hadithCache = {};
 
   @override
   void initState() {
@@ -26,15 +26,13 @@ class _HadithScreenState extends State<HadithScreen> {
   }
 
   Future<String> _loadHadith(int number) async {
-    // لو موجودة في الكاش نرجعها مباشرة
     if (_hadithCache.containsKey(number)) {
       return _hadithCache[number]!;
     }
 
-    // اسم الملف h1.txt ... h50.txt
     final path = 'assets/Hadeeth/h$number.txt';
     final content = await rootBundle.loadString(path);
-    _hadithCache[number] = content; // تخزين في الكاش
+    _hadithCache[number] = content;
     return content;
   }
 
@@ -43,7 +41,7 @@ class _HadithScreenState extends State<HadithScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // الخلفية العامة للشاشة
+
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -60,7 +58,6 @@ class _HadithScreenState extends State<HadithScreen> {
             children: [
               const SizedBox(height: 60),
 
-              // الصورة + Islami
               Column(
                 children: [
                   Image.asset(
@@ -82,7 +79,6 @@ class _HadithScreenState extends State<HadithScreen> {
 
               const SizedBox(height: 40),
 
-              // الكروت
               Expanded(
                 child: PageView.builder(
                   controller: _pageController,
@@ -97,7 +93,6 @@ class _HadithScreenState extends State<HadithScreen> {
                           final hadithText = snapshot.data ?? "جارٍ التحميل...";
                           return Stack(
                             children: [
-                              // الكارت الرئيسي مع الصور
                               Container(
                                 width: 313,
                                 height: 650,
@@ -107,7 +102,6 @@ class _HadithScreenState extends State<HadithScreen> {
                                 ),
                                 child: Stack(
                                   children: [
-                                    // background_card نصفية
                                     Positioned(
                                       top: 100,
                                       left: 24,
@@ -121,7 +115,6 @@ class _HadithScreenState extends State<HadithScreen> {
                                       ),
                                     ),
 
-                                    // كلمة الحديث
                                     Positioned(
                                       top: 20,
                                       left: 0,
@@ -138,12 +131,11 @@ class _HadithScreenState extends State<HadithScreen> {
                                       ),
                                     ),
 
-                                    // محتوى الحديث
                                     Positioned(
                                       top: 60,
                                       left: 20,
                                       right: 20,
-                                      bottom: 100, // أعلى صورة المسجد
+                                      bottom: 100,
                                       child: SingleChildScrollView(
                                         child: Text(
                                           hadithText,
@@ -156,7 +148,6 @@ class _HadithScreenState extends State<HadithScreen> {
                                       ),
                                     ),
 
-                                    // الصور الجانبية
                                     Positioned(
                                       top: 10,
                                       right: 10,
@@ -180,7 +171,6 @@ class _HadithScreenState extends State<HadithScreen> {
                                       ),
                                     ),
 
-                                    // صورة المسجد أسفل الكارت
                                     Positioned(
                                       bottom: 0,
                                       left: 0,

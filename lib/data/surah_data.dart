@@ -236,7 +236,7 @@ final List<String> englishQuranSurahs = [
   "An-Nas"
 ];
 
-// عدد الآيات لكل سورة (كما في بياناتك)
+// عدد الآيات لكل سورة
 final List<String> AyaNumber = [
   '7',
   '286',

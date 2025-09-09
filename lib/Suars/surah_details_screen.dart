@@ -38,7 +38,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
       await rootBundle.loadString('assets/Suras/$surahNumber.txt');
       return content;
     } catch (e) {
-      return 'لا يوجد محتوى للملف';
+      return 'impty';
     }
   }
 

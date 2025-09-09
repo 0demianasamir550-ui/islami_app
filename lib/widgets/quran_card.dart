@@ -24,7 +24,6 @@ class QuranCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // النصوص على الشمال
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
@@ -63,8 +62,6 @@ class QuranCard extends StatelessWidget {
               ),
             ),
           ),
-
-          // الصورة على اليمين
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(

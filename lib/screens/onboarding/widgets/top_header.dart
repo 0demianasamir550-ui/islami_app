@@ -6,7 +6,7 @@ class TopHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: Alignment.center, // نصفي كل العناصر
+      alignment: Alignment.center,
       children: [
         Image.asset(
           'assets/images/mosque.png',
@@ -15,7 +15,7 @@ class TopHeader extends StatelessWidget {
           fit: BoxFit.contain,
         ),
         Positioned(
-          top: 75, // ارتفاع النص داخل الصورة
+          top: 75,
           child: ShaderMask(
             shaderCallback: (Rect bounds) {
               return const LinearGradient(

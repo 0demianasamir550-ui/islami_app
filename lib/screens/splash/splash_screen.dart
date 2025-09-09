@@ -27,10 +27,9 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Container(
           width: 430,
           height: 932,
-          color: Colors.black, // الخلفية السوداء
+          color: Colors.black,
           child: Stack(
             children: [
-              // الصورة الأولى objects.png
               Positioned(
                 top: 384,
                 left: 123,
@@ -42,7 +41,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
 
-              // الصورة الثانية image_route.png بالحجم الصحيح
               Positioned(
                 top: 792,
                 left: 125,
@@ -50,11 +48,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 76,
                 child: Image.asset(
                   'assets/images/image_route.png',
-                  fit: BoxFit.fill, // تظهر الصورة واضحة بالحجم المطلوب
+                  fit: BoxFit.fill,
                 ),
               ),
 
-              // الجملة تحت الصورة بالكامل في سطر واحد
               Positioned(
                 top: 862,
                 left: 93,
@@ -66,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     fontWeight: FontWeight.w400,
                     color: Color(0xFFDAB98D),
                   ),
-                  maxLines: 1, // نص في سطر واحد
+                  maxLines: 1,
                   overflow: TextOverflow.visible,
                 ),
               ),
