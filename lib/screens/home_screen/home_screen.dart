@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'widgets/bottom_icons.dart';
 import '../../widgets/quran_card.dart';
 import '../../widgets/StarSurahCard.dart';
+import 'widgets/bottom_icons.dart';
 import '../../data/surah_data.dart';
 import '../../Suars/surah_details_screen.dart';
+import '../Sebha/sebha_screen.dart';
+import '../Radio/radio_screen.dart';
+import '../Hadith/hadith_screen.dart'; // شاشة الحديث
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,28 +16,53 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String currentImage = 'assets/images/image_one_home.jpg';
+  int currentIndex = 0;
+
+  final screens = [
+    const HomeContent(), // محتوى Home الأصلي
+    const SebhaScreen(),
+    const RadioScreen(),
+    const HadithScreen(), // شاشة الحديث
+  ];
+
+  void onBottomIconPressed(String screen) {
+    setState(() {
+      if (screen == 'moon' || screen == 'home') {
+        currentIndex = 0;
+      } else if (screen == 'book') {
+        currentIndex = 3; // عرض شاشة الحديث
+      } else if (screen == 'sebha') {
+        currentIndex = 1;
+      } else if (screen == 'radio') {
+        currentIndex = 2;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        // الخلفية الأساسية + overlay مظلم
+      body: IndexedStack(
+        index: currentIndex,
+        children: screens,
+      ),
+      bottomNavigationBar: BottomIcons(onIconPressed: onBottomIconPressed),
+    );
+  }
+}
+
+// محتوى Home الأصلي
+class HomeContent extends StatelessWidget {
+  const HomeContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
         Container(color: const Color(0xFF202020)),
         Positioned.fill(
-          child: Stack(children: [
-            Image.asset(
-              currentImage,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-              errorBuilder: (c, e, s) => Container(color: const Color(0xFF202020)),
-            ),
-            Container(color: Colors.black.withOpacity(0.4)),
-          ]),
+          child: Container(color: Colors.black.withOpacity(0.4)),
         ),
-
-        // صورة المسجد + كلمة Islami
         Positioned(
           top: 30,
           left: 67,
@@ -65,8 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-
-        // المستطيل الشفاف العلوي (Sura Name)
         Positioned(
           top: 192,
           left: 20,
@@ -74,18 +100,27 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Container(
             height: 55,
             decoration: BoxDecoration(
-              color: const Color(0xB3202020), // #202020 مع شفافية
+              color: const Color(0xB3202020),
               border: Border.all(color: const Color(0xFFE2BE7F), width: 1),
             ),
             child: Row(
               children: [
                 const SizedBox(width: 10),
-                Image.asset(
-                  'assets/icons/ic_moon.png',
-                  width: 30,
-                  height: 30,
-                  color: Colors.yellow,
-                  errorBuilder: (c, e, s) => const SizedBox(width: 30, height: 30),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const SebhaScreen()),
+                    );
+                  },
+                  child: Image.asset(
+                    'assets/icons/ic_moon.png',
+                    width: 30,
+                    height: 30,
+                    color: Colors.yellow,
+                    errorBuilder: (c, e, s) =>
+                    const SizedBox(width: 30, height: 30),
+                  ),
                 ),
                 const SizedBox(width: 10),
                 const Text(
@@ -101,8 +136,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-
-        // Most Recently title
         const Positioned(
           top: 267,
           left: 21,
@@ -116,8 +149,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-
-        // مستطيلات السور الأفقية (QuranCard) - لون #E2BE7F، النص على الشمال، الصورة على اليمين
         Positioned(
           top: 300,
           left: 0,
@@ -129,9 +160,15 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               itemCount: arabicAuranSuras.length,
               itemBuilder: (context, index) {
-                final eng = (index < englishQuranSurahs.length) ? englishQuranSurahs[index] : 'Sura';
-                final ar = (index < arabicAuranSuras.length) ? arabicAuranSuras[index] : '';
-                final versesStr = (index < AyaNumber.length) ? '${AyaNumber[index]} Verses' : '—';
+                final eng = (index < englishQuranSurahs.length)
+                    ? englishQuranSurahs[index]
+                    : 'Sura';
+                final ar = (index < arabicAuranSuras.length)
+                    ? arabicAuranSuras[index]
+                    : '';
+                final versesStr = (index < AyaNumber.length)
+                    ? '${AyaNumber[index]} Verses'
+                    : '—';
                 return Padding(
                   padding: const EdgeInsets.only(right: 12),
                   child: QuranCard(
@@ -145,8 +182,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-
-        // Suras List title
         const Positioned(
           top: 480,
           left: 21,
@@ -160,19 +195,23 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-
-        // قائمة النجوم (عمودية) - كل عنصر نجمة + بيانات + divider
         Positioned(
           top: 520,
           left: 20,
           right: 20,
-          bottom: 90, // يترك مساحة للشريط السفلي
+          bottom: 90,
           child: ListView.builder(
             itemCount: arabicAuranSuras.length,
             itemBuilder: (context, index) {
-              final eng = (index < englishQuranSurahs.length) ? englishQuranSurahs[index] : 'Sura';
-              final ar = (index < arabicAuranSuras.length) ? arabicAuranSuras[index] : '';
-              final versesStr = (index < AyaNumber.length) ? '${AyaNumber[index]} Verses' : '—';
+              final eng = (index < englishQuranSurahs.length)
+                  ? englishQuranSurahs[index]
+                  : 'Sura';
+              final ar = (index < arabicAuranSuras.length)
+                  ? arabicAuranSuras[index]
+                  : '';
+              final versesStr = (index < AyaNumber.length)
+                  ? '${AyaNumber[index]} Verses'
+                  : '—';
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 6),
                 child: StarSurahCard(
@@ -181,7 +220,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   arabicName: ar,
                   verses: versesStr,
                   onTap: () {
-                    // عند الضغط ننتقل لصفحة التفاصيل مع نفس الخلفية وقيمة الاسم
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -190,7 +228,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           surahEnglishName: eng,
                           surahArabicName: ar,
                           verses: versesStr,
-                          backgroundImage: currentImage,
+                          backgroundImage:
+                          'assets/images/image_one_home.jpg',
                         ),
                       ),
                     );
@@ -200,25 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
-
-        // الشريط السفلي مع الأيقونات (يغيّر الخلفية عند الضغط)
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-            height: 80,
-            color: const Color(0xFFE2BE7F),
-            child: BottomIcons(
-              onIconPressed: (imagePath) {
-                setState(() {
-                  currentImage = imagePath;
-                });
-              },
-            ),
-          ),
-        ),
-      ]),
+      ],
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../screens/home_screen/widgets/bottom_icons.dart'; // تأكد من المسار الصحيح
+import '../screens/home_screen/widgets/bottom_icons.dart';
+import 'ayah_screen.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class SurahDetailScreen extends StatefulWidget {
   final int surahNumber;
@@ -30,12 +32,21 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
     currentImage = widget.backgroundImage;
   }
 
+  Future<String> readSurahFile(int surahNumber) async {
+    try {
+      String content =
+      await rootBundle.loadString('assets/Suras/$surahNumber.txt');
+      return content;
+    } catch (e) {
+      return 'لا يوجد محتوى للملف';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          // الخلفية
           Positioned.fill(
             child: Image.asset(
               currentImage,
@@ -45,8 +56,6 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
             ),
           ),
           Container(color: Colors.black.withOpacity(0.3)),
-
-          // صورة المسجد + كلمة Islami
           Positioned(
             top: 30,
             left: 0,
@@ -72,18 +81,15 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
               ],
             ),
           ),
-
-          // المستطيل الشفاف (أيقونة صفراء + الاسم)
           Positioned(
-            top: 190, // 👈 نزلنا لتحت شويه
+            top: 190,
             left: 20,
             right: 20,
             child: Container(
               height: 55,
               decoration: BoxDecoration(
                 color: const Color(0xB3202020),
-                border:
-                Border.all(color: const Color(0xFFE2BE7F), width: 1),
+                border: Border.all(color: const Color(0xFFE2BE7F), width: 1),
               ),
               child: Row(
                 children: [
@@ -93,8 +99,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                     width: 30,
                     height: 30,
                     color: Colors.yellow,
-                    errorBuilder: (_, __, ___) =>
-                    const SizedBox.shrink(),
+                    errorBuilder: (_, __, ___) => const SizedBox.shrink(),
                   ),
                   const SizedBox(width: 12),
                   Text(
@@ -109,42 +114,50 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
               ),
             ),
           ),
-
-          // النجمة + النصوص
           Positioned(
-            top: 270, // 👈 بقت تحت المستطيل
+            top: 270,
             left: 20,
             right: 20,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // النجمة على الشمال
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/images/big_star.png',
-                      width: 70,
-                      height: 70,
-                      errorBuilder: (_, __, ___) => Container(
+                GestureDetector(
+                  onTap: () async {
+                    String ayahContent =
+                    await readSurahFile(widget.surahNumber);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => AyahScreen(
+                          englishName: widget.surahEnglishName,
+                          arabicName: widget.surahArabicName,
+                          ayahContent: ayahContent,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/big_star.png',
                         width: 70,
                         height: 70,
-                        color: Colors.black26,
+                        errorBuilder: (_, __, ___) =>
+                            Container(width: 70, height: 70, color: Colors.black26),
                       ),
-                    ),
-                    Text(
-                      '${widget.surahNumber}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                      Text(
+                        '${widget.surahNumber}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 12),
-
-                // الاسم الإنجليزي + عدد الآيات
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -166,10 +179,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                     ),
                   ],
                 ),
-
                 const Spacer(),
-
-                // الاسم العربي على اليمين
                 Text(
                   widget.surahArabicName,
                   style: const TextStyle(
@@ -181,8 +191,6 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
               ],
             ),
           ),
-
-          // الشريط السفلي
           Positioned(
             bottom: 0,
             left: 0,
